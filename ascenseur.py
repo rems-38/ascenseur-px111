@@ -39,6 +39,28 @@ aff4 = pygame.image.load("./media/aff4.png").convert_alpha()
 aff5 = pygame.image.load("./media/aff5.png").convert_alpha()
 pos_aff = (25, 25)
 
+et1 = pygame.image.load("./media/et1.png").convert_alpha()
+et2 = pygame.image.load("./media/et2.png").convert_alpha()
+et3 = pygame.image.load("./media/et3.png").convert_alpha()
+et4 = pygame.image.load("./media/et4.png").convert_alpha()
+et5 = pygame.image.load("./media/et5.png").convert_alpha()
+pos_et1 = (255, 100)
+pos_et2 = (250, 175)
+pos_et3 = (250, 250)
+pos_et4 = (250, 325)
+pos_et5 = (250, 400)
+
+up = pygame.image.load("./media/up.png").convert_alpha()
+down = pygame.image.load("./media/down.png").convert_alpha()
+pos_up1 = (325, 100)
+pos_up2 = (325, 175)
+pos_up3 = (325, 250)
+pos_up4 = (325, 325)
+pos_down2 = (400, 175)
+pos_down3 = (400, 250)
+pos_down4 = (400, 325)
+pos_down5 = (400, 400)
+
 
 # Def des variables
 bt_cab_1 = 0 # Bouton dans cabine pour aller à l'étage 1
@@ -106,6 +128,19 @@ def aller_a_etage(etage_reel, etage_vise):
         while etage_reel < etage_vise:
             if monter(etage_reel) != None:
                 etage_reel = monter(etage_reel)
+                if etage_reel == 0:
+                    fenetre.blit(aff1, pos_aff)
+                elif etage_reel == 1:
+                    fenetre.blit(aff2, pos_aff)
+                elif etage_reel == 2:
+                    fenetre.blit(aff3, pos_aff)
+                elif etage_reel == 3:
+                    fenetre.blit(aff4, pos_aff)
+                elif etage_reel == 4:
+                    fenetre.blit(aff5, pos_aff)
+                else:
+                    pass
+                pygame.display.flip()
                 time.sleep(2)
             else:
                 break
@@ -115,6 +150,19 @@ def aller_a_etage(etage_reel, etage_vise):
         while etage_reel > etage_vise:
             if descendre(etage_reel) != None:
                 etage_reel = descendre(etage_reel)
+                if etage_reel == 0:
+                    fenetre.blit(aff1, pos_aff)
+                elif etage_reel == 1:
+                    fenetre.blit(aff2, pos_aff)
+                elif etage_reel == 2:
+                    fenetre.blit(aff3, pos_aff)
+                elif etage_reel == 3:
+                    fenetre.blit(aff4, pos_aff)
+                elif etage_reel == 4:
+                    fenetre.blit(aff5, pos_aff)
+                else:
+                    pass
+                pygame.display.flip()
                 time.sleep(2)
             else:
                 break
@@ -130,6 +178,24 @@ while continuer:
     click_bt3 = fenetre.blit(bt3, pos_bt3)
     click_bt4 = fenetre.blit(bt4, pos_bt4)
     click_bt5 = fenetre.blit(bt5, pos_bt5)
+
+    fenetre.blit(et1, pos_et1)
+    fenetre.blit(et2, pos_et2)
+    fenetre.blit(et3, pos_et3)
+    fenetre.blit(et4, pos_et4)
+    fenetre.blit(et5, pos_et5)
+
+    click_up1 = fenetre.blit(up, pos_up1)
+    click_up2 = fenetre.blit(up, pos_up2)
+    click_up3 = fenetre.blit(up, pos_up3)
+    click_up4 = fenetre.blit(up, pos_up4)
+    click_down2 = fenetre.blit(down, pos_down2)
+    click_down3 = fenetre.blit(down, pos_down3)
+    click_down4 = fenetre.blit(down, pos_down4)
+    click_down5 = fenetre.blit(down, pos_down5)
+
+    # click_up1 = fenetre.blit(up, pos_up1)
+    # click_up2 = fenetre.blit(up, pos_up2)
     
     if etage_reel == 0:
         fenetre.blit(aff1, pos_aff)
@@ -161,6 +227,24 @@ while continuer:
                 etage_reel = aller_a_etage(etage_reel, 3)
             elif click_bt5.collidepoint(event.pos):
                 etage_reel = aller_a_etage(etage_reel, 4)
+
+            elif click_up1.collidepoint(event.pos):
+                print("up1")
+            elif click_up2.collidepoint(event.pos):
+                print("up2")
+            elif click_up3.collidepoint(event.pos):
+                print("up3")
+            elif click_up4.collidepoint(event.pos):
+                print("up4")
+            elif click_down2.collidepoint(event.pos):
+                print("down2")
+            elif click_down3.collidepoint(event.pos):
+                print("down3")
+            elif click_down4.collidepoint(event.pos):
+                print("down4")
+            elif click_down5.collidepoint(event.pos):
+                print("down5")
+
             else:
                 pass # pour l'instant
 
