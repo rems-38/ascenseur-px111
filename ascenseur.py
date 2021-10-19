@@ -61,21 +61,7 @@ pos_down3 = (400, 250)
 pos_down4 = (400, 325)
 pos_down5 = (400, 400)
 
-
-# Def des variables
-bt_cab_1 = 0 # Bouton dans cabine pour aller à l'étage 1
-bt_cab_2 = 0
-bt_cab_3 = 0
-bt_cab_4 = 0
-bt_cab_5 = 0
-ap_et1_up = 0 # Bouton pour appeler l'ascenseur quand on est à l'étage 1 et qu'on veut monter
-ap_et2_up = 0
-ap_et2_dwn = 0 # Bouton pour appeler l'ascenseur quand on est à l'étage 2 et qu'on veut descendre
-ap_et3_up = 0
-ap_et3_dwn = 0
-ap_et4_up = 0
-ap_et4_dwn = 0
-ap_et5_dwn = 0
+# Variables
 afficheur = [0, 0, 0] # Tableau pour coder en binaire le n° des étages avec aff[0] bit poids fort et aff[2] bit poids faible
 etage_reel = 0 # L'étage 0 en Python correspond à l'étage 1 en réalité
 etage_vise = [0] # Tableau pour l'(es) étage(s) visé(s) (comprend la mémorisation)
@@ -193,9 +179,6 @@ while continuer:
     click_down3 = fenetre.blit(down, pos_down3)
     click_down4 = fenetre.blit(down, pos_down4)
     click_down5 = fenetre.blit(down, pos_down5)
-
-    # click_up1 = fenetre.blit(up, pos_up1)
-    # click_up2 = fenetre.blit(up, pos_up2)
     
     if etage_reel == 0:
         fenetre.blit(aff1, pos_aff)
@@ -249,7 +232,3 @@ while continuer:
                 pass # pour l'instant
 
 
-
-
-
-#aller_a_etage(4, 2)
