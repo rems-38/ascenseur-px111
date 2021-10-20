@@ -66,6 +66,8 @@ afficheur = [0, 0, 0] # Tableau pour coder en binaire le n° des étages avec af
 etage_reel = 0 # L'étage 0 en Python correspond à l'étage 1 en réalité
 etage_vise = [0] # Tableau pour l'(es) étage(s) visé(s) (comprend la mémorisation)
 
+mem_but_up = [] # Pour mémoriser les boutons (étages) appuyés (vers le haut)
+mem_but_down = [] # Pour mémoriser les boutons (étages) appuyés (vers le bas)
 
 def monter(etage):
     if etage + 1 == 5:
