@@ -9,7 +9,9 @@ Projet :
 - Dans la cabine : 5 boutons pour aller sur chaque étages
 
 
-Trouver une idée pour les boutons : lib msvcrt (https://stackoverflow.com/questions/2408560/non-blocking-console-input)
+Pour l'étage visé faire une liste qui s'append quand on appuie sur les boutons
+On la sort() (trie) dans un ordre ou dans l'autre selon si on monte ou si on descend comme ça on fait tout "d'un coup" (ex : si 2, 4, 3 -> on va à 2 puis à 3 puis à 4 et pas on monte, on descend, et on remonte)
+Et on oublie pas de pop() pour dire qu'on est bien arrivé à l'étage 
 """
 
 import pygame
