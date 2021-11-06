@@ -216,6 +216,13 @@ while continuer:
     else:
         pass
 
+    if up_in_progress == True or down_in_progress == True:
+        fenetre.blit(etinactive, pos_etstatus)
+    elif up_in_progress == False or down_in_progress == False:
+        fenetre.blit(etactive, pos_etstatus)
+    else:
+        pass
+
     pygame.display.flip()
 
     for event in pygame.event.get():
