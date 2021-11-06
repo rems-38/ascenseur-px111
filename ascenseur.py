@@ -41,6 +41,10 @@ aff4 = pygame.image.load("./media/aff4.png").convert_alpha()
 aff5 = pygame.image.load("./media/aff5.png").convert_alpha()
 pos_aff = (25, 25)
 
+etactive = pygame.image.load("./media/etactive.png")
+etinactive = pygame.image.load("./media/etinactive.png")
+pos_etstatus = (57, 190)
+
 et1 = pygame.image.load("./media/et1.png").convert_alpha()
 et2 = pygame.image.load("./media/et2.png").convert_alpha()
 et3 = pygame.image.load("./media/et3.png").convert_alpha()
@@ -67,6 +71,13 @@ pos_down5 = (400, 400)
 afficheur = [0, 0, 0] # Tableau pour coder en binaire le n° des étages avec aff[0] bit poids fort et aff[2] bit poids faible
 etage_reel = 0 # L'étage 0 en Python correspond à l'étage 1 en réalité
 etage_vise = [0] # Tableau pour l'(es) étage(s) visé(s) (comprend la mémorisation)
+
+mem_but_cab = [] # Pour mémoriser les boutons (étages) appuyés dans la cabine 
+mem_but_up = [] # Pour mémoriser les boutons (étages) appuyés (vers le haut)
+mem_but_down = [] # Pour mémoriser les boutons (étages) appuyés (vers le bas)
+
+up_in_progress = False
+down_in_progress = False
 
 
 def monter(etage):
@@ -115,6 +126,8 @@ def aller_a_etage(etage_reel, etage_vise):
     if etage_reel < etage_vise:
         while etage_reel < etage_vise:
             if monter(etage_reel) != None:
+                up_in_progress = True
+                # fenetre.blit(etinactive, pos_etstatus)
                 etage_reel = monter(etage_reel)
                 if etage_reel == 0:
                     fenetre.blit(aff1, pos_aff)
@@ -129,14 +142,19 @@ def aller_a_etage(etage_reel, etage_vise):
                 else:
                     pass
                 pygame.display.flip()
-                time.sleep(2)
+                time.sleep(3)
+                # fenetre.blit(etactive, pos_etstatus)
+                # pygame.display.flip()
             else:
+                up_in_progress = False
                 break
             print(afficher_afficheur(etage_reel))
     
     elif etage_reel > etage_vise:    
         while etage_reel > etage_vise:
             if descendre(etage_reel) != None:
+                down_in_progress = True
+                # fenetre.blit(etinactive, pos_etstatus)
                 etage_reel = descendre(etage_reel)
                 if etage_reel == 0:
                     fenetre.blit(aff1, pos_aff)
@@ -151,8 +169,11 @@ def aller_a_etage(etage_reel, etage_vise):
                 else:
                     pass
                 pygame.display.flip()
-                time.sleep(2)
+                time.sleep(3)
+                # fenetre.blit(etactive, pos_etstatus)
+                # pygame.display.flip()
             else:
+                down_in_progress = False
                 break
             print(afficher_afficheur(etage_reel))
 
@@ -203,34 +224,62 @@ while continuer:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if click_bt1.collidepoint(event.pos):
-                etage_reel = aller_a_etage(etage_reel, 0)
+                mem_but_cab.append(0)
+                # etage_reel = aller_a_etage(etage_reel, 0)
             elif click_bt2.collidepoint(event.pos):
-                etage_reel = aller_a_etage(etage_reel, 1)
+                mem_but_cab.append(1)
+                # etage_reel = aller_a_etage(etage_reel, 1)
             elif click_bt3.collidepoint(event.pos):
-                etage_reel = aller_a_etage(etage_reel, 2)
+                mem_but_cab.append(2)
+                # etage_reel = aller_a_etage(etage_reel, 2)
             elif click_bt4.collidepoint(event.pos):
-                etage_reel = aller_a_etage(etage_reel, 3)
+                mem_but_cab.append(3)
+                # etage_reel = aller_a_etage(etage_reel, 3)
             elif click_bt5.collidepoint(event.pos):
-                etage_reel = aller_a_etage(etage_reel, 4)
+                mem_but_cab.append(4)
+                # etage_reel = aller_a_etage(etage_reel, 4)
 
             elif click_up1.collidepoint(event.pos):
-                print("up1")
+                mem_but_up.append(0)
             elif click_up2.collidepoint(event.pos):
-                print("up2")
+                mem_but_up.append(1)
             elif click_up3.collidepoint(event.pos):
-                print("up3")
+                mem_but_up.append(2)
             elif click_up4.collidepoint(event.pos):
-                print("up4")
+                mem_but_up.append(3)
             elif click_down2.collidepoint(event.pos):
-                print("down2")
+                mem_but_down.append(1)
             elif click_down3.collidepoint(event.pos):
-                print("down3")
+                mem_but_down.append(2)
             elif click_down4.collidepoint(event.pos):
-                print("down4")
+                mem_but_down.append(3)
             elif click_down5.collidepoint(event.pos):
-                print("down5")
+                mem_but_down.append(4)
 
             else:
                 pass # pour l'instant
 
+    # /!\ PROBLEME : quand on clique il part direct et du coup si par ex je fais 5 et 3 il va d'abord aller au 5 puis une fois qu'il est arrivé au 3
+    # parce que genre quand il est dans la fonction pour monter/descendre il recheck pas la liste, il MAJ seulement quand il est arrivé
+    # par contre si quand il est en train de monter on en clique plusieurs là c'est bien mémorisé (je crois)
 
+    # euh alors aussi, il ne s'arrête pas après être arrivé à un étage -> problème
+    # j'ai fais un truc avec un voyant vert là (etactive) en gros le but c'est que quand on est à un étage et qu'on bouge pas il soit vert (etactive)
+    # et quand l'ascenseur est en mouvement il soit noir (etinactive) parce que si j'enchaine plusieurs trucs (genre au niveau de la cab je fais 5 et 1) il s'arrête pas en 5 il repart direct
+    
+    mem_but_cab.sort() # si ce sort va pas j'ai toujours ma fonction faite en TD
+    for i in mem_but_cab: # Il va falloir la trier
+        if etage_reel < i: # On doit monter
+            for j in mem_but_up:
+                if j < i:
+                    etage_reel = aller_a_etage(etage_reel, j) # on récupère la personne qui veut aussi monter
+                    mem_but_up.remove(j)
+                    break
+        elif etage_reel > i: # On doit descendre
+            for j in mem_but_down:
+                if j > i:
+                    etage_reel = aller_a_etage(etage_reel, j) # on récupère la personne qui veut aussi descendre
+                    mem_but_down.remove(j)
+                    break
+        etage_reel = aller_a_etage(etage_reel, i) # on va à l'étage demandeé
+        mem_but_cab.remove(i) # étage réel = étage visé
